@@ -1,36 +1,80 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# 🎮 Wordle Clone Game
 
-## Getting Started
+A simple and fun **Wordle-style word guessing game** where players try to guess the hidden word within limited attempts.
 
-First, run the development server:
+---
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## 🚀 Features
+
+* 🔤 5-letter word guessing system
+* 🎯 Limited attempts
+* 🟩 Correct letter at correct position
+* 🟨 Correct letter at wrong position
+* ⬜ Incorrect letter feedback
+* 📱 Responsive UI
+* ⚡ Fast and interactive gameplay
+
+---
+
+## 🛠️ Tech Stack
+
+```md
+Frontend: React + Vite
+Styling: Tailwind CSS
+Logic: JavaScript
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+## 📂 Folder Structure
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```md
+wordle-game/
+│-- src/
+│   │-- components/
+│   │-- App.jsx
+│   │-- main.jsx
+│-- public/
+│-- package.json
+│-- README.md
+```
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+## ▶️ Installation
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+git clone <your-github-repo-link>
+cd wordle-game
+npm install
+npm run dev
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
+## 🎮 Gameplay Rules
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```md
+1. Guess the hidden 5-letter word
+2. You have limited attempts
+3. Green  = correct letter + correct position
+4. Yellow = correct letter + wrong position
+5. Gray   = letter not present
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+
+## 🌟 Future Improvements
+
+```md
+- Add timer
+- Add score board
+- Add streak system
+- Add multiple difficulty levels
+```
+
+---
+
+## 👨‍💻 Author
+
+**Pawan Kumar**
