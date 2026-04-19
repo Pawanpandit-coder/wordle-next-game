@@ -19,8 +19,7 @@ A simple and fun **Wordle-style word guessing game** where players try to guess 
 ## 🛠️ Tech Stack
 
 ```md
-Frontend: React + Vite
-Styling: Tailwind CSS
+framework: nextJs
 Logic: JavaScript
 ```
 
@@ -30,10 +29,9 @@ Logic: JavaScript
 
 ```md
 wordle-game/
-│-- src/
-│   │-- components/
-│   │-- App.jsx
-│   │-- main.jsx
+│-- app/
+│   │-- page.js
+│   │-- layout.js
 │-- public/
 │-- package.json
 │-- README.md
