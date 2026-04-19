@@ -42,7 +42,7 @@ wordle-game/
 ## ▶️ Installation
 
 ```bash
-git clone <your-github-repo-link>
+git clone <https://github.com/Pawanpandit-coder/wordle-next-game>
 cd wordle-game
 npm install
 npm run dev
@@ -75,4 +75,4 @@ npm run dev
 
 ## 👨‍💻 Author
 
-**Pawan Kumar**
+**Pawan Pandit**
