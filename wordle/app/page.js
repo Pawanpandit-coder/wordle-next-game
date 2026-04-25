@@ -2321,9 +2321,8 @@ export default function Home() {
     "ZONAL",
   ];
 
-
-const [currentRow, setCurrentRow] = useState(0);
-const [currentCol, setCurrentCol] = useState(0);
+  const [currentRow, setCurrentRow] = useState(0);
+  const [currentCol, setCurrentCol] = useState(0);
 
   const [word, setWord] = useState("");
 
@@ -2414,100 +2413,96 @@ const [currentCol, setCurrentCol] = useState(0);
   }, [pointer]);
 
   return (
-    <div className="h-screen w-full bg-[#f3f3f3] dark:bg-black grid grid-rows-[auto_1fr_auto] overflow-hidden font-sans">
-  
-  {/* Header */}
-  <div className="border-b border-gray-300 px-4 py-3 flex items-center justify-center">
-    {/* <button className="text-3xl text-gray-500">?</button> */}
+    <div className="h-screen w-full dark:bg-black grid grid-rows-[auto_1fr_auto] overflow-hidden font-sans">
+      {/* Header */}
+      <div className="border-b border-gray-300 px-4 py-3 flex items-center justify-center">
+        {/* <button className="text-3xl text-gray-500">?</button> */}
 
-    <h1 className="text-xl md:text-3xl font-bold tracking-widest text-black dark:text-white">
-      WORDLE UNLIMITED
-    </h1>
+        <h1 className="text-xl md:text-3xl font-bold tracking-widest text-black dark:text-white">
+          WORDLE UNLIMITED
+        </h1>
 
-    <div className="flex gap-4 text-xl md:text-3xl text-gray-500">
-      <button>📊</button>
-      <button>⚙️</button>
-    </div>
-  </div>
+        <div className="flex gap-4 text-xl md:text-3xl text-gray-500">
+          <button>📊</button>
+          <button>⚙️</button>
+        </div>
+      </div>
 
-  {/* Game Board */}
-  <div className="flex justify-center items-center">
-    <div className="flex flex-col gap-1 my-1">
-      {letters.map((rowData, indx) => (
-        <div key={indx} className="flex gap-2">
-          {rowData.map((l, i) => (
-            <div
-              key={i}
-              className={`w-15 h-15 border-2 border-gray-300 flex items-center justify-center text-3xl font-bold
+      {/* Game Board */}
+      <div className="flex justify-center items-center">
+        <div className="flex flex-col gap-1 my-1">
+          {letters.map((rowData, indx) => (
+            <div key={indx} className="flex gap-1">
+              {rowData.map((l, i) => (
+                <div
+                  key={i}
+                  className={`w-14 h-14 border-2 border-gray-300 flex items-center justify-center text-3xl font-bold
               ${
                 colors[indx][i] === "green"
                   ? "bg-[#6aaa64] text-white border-none"
                   : colors[indx][i] === "yellow"
-                  ? "bg-[#c5b661] text-white border-none"
-                  : colors[indx][i] === "gray"
-                  ? "bg-[#787c7e] text-white border-none"
-                  : "bg-transparent"
+                    ? "bg-[#c5b661] text-white border-none"
+                    : colors[indx][i] === "gray"
+                      ? "bg-[#787c7e] text-white border-none"
+                      : "bg-transparent"
               }`}
-            >
-              {l}
+                >
+                  {l}
+                </div>
+              ))}
             </div>
           ))}
         </div>
-      ))}
+      </div>
+
+      {/* Keyboard */}
+      <div className="px-1 pb-2">
+        <div className="max-w-xl mx-auto flex flex-col gap-1">
+          {/* Row 1 */}
+          <div className="grid grid-cols-10 gap-1">
+            {"QWERTYUIOP".split("").map((k) => (
+              <button
+                key={k}
+                className="h-12 rounded bg-gray-300 text-l font-bold"
+              >
+                {k}
+              </button>
+            ))}
+          </div>
+
+          {/* Row 2 */}
+          <div className="grid grid-cols-9 gap-1 px-6">
+            {"ASDFGHJKL".split("").map((k) => (
+              <button
+                key={k}
+                className="h-12 rounded bg-gray-300 text-l font-bold"
+              >
+                {k}
+              </button>
+            ))}
+          </div>
+
+          {/* Row 3 */}
+          <div className="grid grid-cols-[1.4fr_repeat(7,1fr)_1fr] gap-1">
+            <button className="h-12 rounded bg-gray-300 text-l font-bold">
+              ENTER
+            </button>
+
+            {"ZXCVBNM".split("").map((k) => (
+              <button
+                key={k}
+                className="h-12 rounded bg-gray-300 text-l font-bold"
+              >
+                {k}
+              </button>
+            ))}
+
+            <button className="h-12 rounded bg-gray-300 text-l font-bold">
+              ⌫
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
-  </div>
-
-  {/* Keyboard */}
-  <div className="px-1 pb-2">
-    <div className="max-w-2xl mx-auto flex flex-col gap-1">
-      
-      {/* Row 1 */}
-      <div className="grid grid-cols-10 gap-1">
-        {"QWERTYUIOP".split("").map((k) => (
-          <button
-            key={k}
-            className="h-12 rounded bg-gray-300 font-bold text-xl"
-          >
-            {k}
-          </button>
-        ))}
-      </div>
-
-      {/* Row 2 */}
-      <div className="grid grid-cols-9 gap-1 px-6">
-        {"ASDFGHJKL".split("").map((k) => (
-          <button
-            key={k}
-            className="h-12 rounded bg-gray-300 font-bold text-xl"
-          >
-            {k}
-          </button>
-        ))}
-      </div>
-
-      {/* Row 3 */}
-      <div className="grid grid-cols-[1.4fr_repeat(7,1fr)_1fr] gap-1">
-        <button className="h-12 rounded bg-gray-300 font-bold text-xl">
-          ENTER
-        </button>
-
-        {"ZXCVBNM".split("").map((k) => (
-          <button
-            key={k}
-            className="h-12 rounded bg-gray-300 font-bold text-xl"
-          >
-            {k}
-          </button>
-        ))}
-
-        <button className="h-12 rounded bg-gray-300 font-bold text-2xl">
-          ⌫
-        </button>
-      </div>
-    </div>
-  </div>
-</div>
   );
 }
-
-
