@@ -2327,6 +2327,7 @@ export default function Home() {
 
   const [currentRow, setCurrentRow] = useState(0);
   const [currentCol, setCurrentCol] = useState(0);
+  const [isGameWon, setIsGameWon] = useState(false);
 
   const [word, setWord] = useState("");
 
@@ -2362,61 +2363,65 @@ export default function Home() {
   const [pointer, setPointer] = useState(0);
   const [row, setRow] = useState(0);
 
-  useEffect(() => {
-    const handleKeyDown = (e) => {
-      if (e.key.length === 1 && /^[a-zA-Z]+$/.test(e.key)) {
-        if (row > 0 && String(letters[row]).replaceAll(",", "") === word) {
-          return;
-        }
-        if (pointer >= 5 || row > 5) {
-          return;
-        }
-        const updated = [...letters];
-        updated[row][pointer] = e.key.toUpperCase();
-        setLetters(updated);
-        setPointer((prev) => prev + 1);
-      } else if (e.key === "Backspace") {
-        if (row > 0 && String(letters[row]).replaceAll(",", "") === word) {
-          return;
-        }
-        if (pointer <= 0) {
-          return;
-        }
-        const updated = [...letters];
-        updated[row][pointer - 1] = "";
-        setLetters(updated);
-        setPointer((prev) => prev - 1);
-      } else if (e.key === "Enter") {
-        if (pointer >= 5 && row <= 5) {
-          const newColors = [...colors];
-          if (wordList.includes(String(letters[row]).split(",").join(""))) {
-            for (let i = 0; i < 5; i++) {
-              const letter = letters[row][i];
-              if (word[i] === letter) {
-                newColors[row][i] = "green"; // ✅ correct
-              } else if (word.includes(letter)) {
-                newColors[row][i] = "yellow"; // 🟡 wrong spot
-              } else {
-                newColors[row][i] = "gray"; // not present
-              }
-            }
-
-            setColors(newColors);
-
-            if (String(letters[row]).replaceAll(",", "") === word) {
-              return;
-            }
-            setRow((prev) => prev + 1);
-            setPointer(0);
-          } else {
-            alert("Not in word list");
-          }
-        } else {
-          return;
-        }
+  const handleKeyDown = (e) => {
+    console.log(e);
+    if (e.key.length === 1 && /^[a-zA-Z]+$/.test(e.key)) {
+      if (row > 0 && String(letters[row]).replaceAll(",", "") === word) {
+        return;
       }
-    };
+      if (pointer >= 5 || row > 5) {
+        return;
+      }
+      const updated = [...letters];
+      updated[row][pointer] = e.key.toUpperCase();
+      setLetters(updated);
+      setPointer((prev) => prev + 1);
+    } else if (e.key === "Backspace") {
+      if (row > 0 && String(letters[row]).replaceAll(",", "") === word) {
+        return;
+      }
+      if (pointer <= 0) {
+        return;
+      }
+      const updated = [...letters];
+      updated[row][pointer - 1] = "";
+      setLetters(updated);
+      setPointer((prev) => prev - 1);
+    } else if (e.key === "Enter") {
+      if (pointer >= 5 && row <= 5) {
+        const newColors = [...colors];
+        if (wordList.includes(String(letters[row]).split(",").join(""))) {
+          for (let i = 0; i < 5; i++) {
+            const letter = letters[row][i];
+            if (word[i] === letter) {
+              newColors[row][i] = "green"; // ✅ correct
+            } else if (word.includes(letter)) {
+              newColors[row][i] = "yellow"; // 🟡 wrong spot
+            } else {
+              newColors[row][i] = "gray"; // not present
+            }
+          }
 
+          setColors(newColors);
+
+          if (String(letters[row]).replaceAll(",", "") === word) {
+            setTimeout(() => {
+              setIsGameWon(true)
+            }, 500);
+            return;
+          }
+          setRow((prev) => prev + 1);
+          setPointer(0);
+        } else {
+          alert("Not in word list");
+        }
+      } else {
+        return;
+      }
+    }
+  };
+
+  useEffect(() => {
     document.addEventListener("keydown", handleKeyDown);
 
     return () => {
@@ -2426,9 +2431,9 @@ export default function Home() {
 
   return (
     <div className="h-screen w-full dark:bg-black grid grid-rows-[4rem_auto_auto] overflow-hidden font-sans">
+    
       {/* Header */}
       <div className=" px-4 py-3 flex items-center justify-center">
-
         <div className="text-xl md:text-2xl font-semibold tracking-widest text-black dark:text-white flex gap-3 items-center border-b border-gray-300 py-1">
           <button className="font-bold text-2xl">?</button>
           <span>WORDLE UNLIMITED</span>
@@ -2472,7 +2477,8 @@ export default function Home() {
             {"QWERTYUIOP".split("").map((k) => (
               <button
                 key={k}
-                className="h-14 rounded bg-gray-300 text-l font-bold"
+                className="h-14 rounded bg-gray-300 text-l font-bold focus:outline-none"
+                onClick={(e) => handleKeyDown({ key: e.target.innerText })}
               >
                 {k}
               </button>
@@ -2484,7 +2490,8 @@ export default function Home() {
             {"ASDFGHJKL".split("").map((k) => (
               <button
                 key={k}
-                className="h-14 rounded bg-gray-300 text-l font-bold"
+                className="h-14 rounded bg-gray-300 text-l font-bold focus:outline-none"
+                onClick={(e) => handleKeyDown({ key: e.target.innerText })}
               >
                 {k}
               </button>
@@ -2493,20 +2500,27 @@ export default function Home() {
 
           {/* Row 3 */}
           <div className="grid grid-cols-[1.4fr_repeat(7,1fr)_1fr] gap-1">
-            <button className="h-14 rounded bg-gray-300 text-l font-bold">
+            <button
+              className="h-14 rounded bg-gray-300 text-l font-bold focus:outline-none"
+              onClick={(e) => handleKeyDown({ key: 'Enter' })}
+            >
               ENTER
             </button>
 
             {"ZXCVBNM".split("").map((k) => (
               <button
                 key={k}
-                className="h-14 rounded bg-gray-300 text-l font-bold"
+                className="h-14 rounded bg-gray-300 text-l font-bold focus:outline-none"
+                onClick={(e) => handleKeyDown({ key: e.target.innerText })}
               >
                 {k}
               </button>
             ))}
 
-            <button className="h-14 rounded bg-gray-300 text-l font-bold">
+            <button
+              className="h-14 rounded bg-gray-300 text-l font-bold focus:outline-none"
+              onClick={(e) => handleKeyDown({ key: 'Backspace' })}
+            >
               ⌫
             </button>
           </div>
