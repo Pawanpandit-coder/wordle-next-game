@@ -2325,9 +2325,8 @@ export default function Home() {
     "YACHT",
   ];
 
-  const [currentRow, setCurrentRow] = useState(0);
-  const [currentCol, setCurrentCol] = useState(0);
   const [isGameWon, setIsGameWon] = useState(false);
+  const [isGameLose, setIsGameLose] = useState(false);
 
   const [word, setWord] = useState("");
 
@@ -2338,7 +2337,7 @@ export default function Home() {
 
   useEffect(() => {
     let tempWord = randomWord();
-    console.log(tempWord);
+    console.log(tempWord)
     setWord(tempWord);
   }, []);
 
@@ -2364,7 +2363,6 @@ export default function Home() {
   const [row, setRow] = useState(0);
 
   const handleKeyDown = (e) => {
-    console.log(e);
     if (e.key.length === 1 && /^[a-zA-Z]+$/.test(e.key)) {
       if (row > 0 && String(letters[row]).replaceAll(",", "") === word) {
         return;
@@ -2406,12 +2404,19 @@ export default function Home() {
 
           if (String(letters[row]).replaceAll(",", "") === word) {
             setTimeout(() => {
-              setIsGameWon(true)
-            }, 500);
+              setIsGameWon(true);
+            }, 300);
             return;
           }
-          setRow((prev) => prev + 1);
+
           setPointer(0);
+          setRow((prev) => prev + 1);
+          if (row >= 5 && String(letters[row]).replaceAll(",", "") !== word) {
+            setTimeout(() => {
+              setIsGameLose(true);
+            }, 300);
+            return;
+          }
         } else {
           alert("Not in word list");
         }
@@ -2429,9 +2434,74 @@ export default function Home() {
     };
   }, [pointer]);
 
+  const replay = () => {
+    window.location.reload();
+    // setLetters([
+    //   ["", "", "", "", ""],
+    //   ["", "", "", "", ""],
+    //   ["", "", "", "", ""],
+    //   ["", "", "", "", ""],
+    //   ["", "", "", "", ""],
+    //   ["", "", "", "", ""],
+    // ]);
+    // setColors([
+    //   ["", "", "", "", ""],
+    //   ["", "", "", "", ""],
+    //   ["", "", "", "", ""],
+    //   ["", "", "", "", ""],
+    //   ["", "", "", "", ""],
+    //   ["", "", "", "", ""],
+    // ]);
+
+    // setPointer(0);
+    // setRow(0);
+    // randomWord();
+    // setIsGameWon(false);
+    // setIsGameLose(false);
+  };
+
   return (
     <div className="h-screen w-full dark:bg-black grid grid-rows-[4rem_auto_auto] overflow-hidden font-sans">
-    
+      {isGameWon && (
+        <div className="absolute flex justify-center items-center h-screen w-screen backdrop-blur-md px-4 py-4 z-10">
+          <div className="h-9/12 md:w-7/12 w-11/12 lg:w-4/12 shadow-black bg-white drop-shadow-xl shadow-2xl rounded-2xl flex justify-center items-center flex-col gap-4">
+            <span
+              className="absolute top-2 right-4 text-xl font-bold"
+              onClick={() => setIsGameWon(false)}
+            >
+              ✕
+            </span>
+            <div className="text-4xl text-[#6aaa64] font-bold">{word} </div>
+            <div className="text-4xl md:text-5xl">🎉You Won🎉</div>
+            <span
+              className="px-4 py-2 border font-semibold hover:bg-[#6aaa64] hover:text-white rounded"
+              onClick={replay}
+            >
+              Replay
+            </span>
+          </div>
+        </div>
+      )}
+      {isGameLose && (
+        <div className="absolute flex justify-center items-center h-screen w-screen backdrop-blur-md px-4 py-4 z-10 border">
+          <div className="h-9/12 md:w-7/12 w-11/12 lg:w-4/12  shadow-black bg-white drop-shadow-xl shadow-2xl rounded-2xl flex justify-center items-center flex-col gap-4">
+            <span
+              className="absolute top-2 right-4 text-xl font-bold"
+              onClick={() => setIsGameLose(false)}
+            >
+              ✕
+            </span>
+            <div className="text-4xl ">Correct Word: </div>
+            <div className="text-4xl text-[#6aaa64] font-bold">{word} </div>
+            <span
+              className="px-4 py-2 border font-semibold hover:bg-[#6aaa64] hover:text-white rounded"
+              onClick={replay}
+            >
+              Replay
+            </span>
+          </div>
+        </div>
+      )}
       {/* Header */}
       <div className=" px-4 py-3 flex items-center justify-center">
         <div className="text-xl md:text-2xl font-semibold tracking-widest text-black dark:text-white flex gap-3 items-center border-b border-gray-300 py-1">
@@ -2502,7 +2572,7 @@ export default function Home() {
           <div className="grid grid-cols-[1.4fr_repeat(7,1fr)_1fr] gap-1">
             <button
               className="h-14 rounded bg-gray-300 text-l font-bold focus:outline-none"
-              onClick={(e) => handleKeyDown({ key: 'Enter' })}
+              onClick={(e) => handleKeyDown({ key: "Enter" })}
             >
               ENTER
             </button>
@@ -2519,7 +2589,7 @@ export default function Home() {
 
             <button
               className="h-14 rounded bg-gray-300 text-l font-bold focus:outline-none"
-              onClick={(e) => handleKeyDown({ key: 'Backspace' })}
+              onClick={(e) => handleKeyDown({ key: "Backspace" })}
             >
               ⌫
             </button>
