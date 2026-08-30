@@ -2513,7 +2513,7 @@ export default function Home() {
       </div>
 
       {/* Game Board */}
-      <div className="flex justify-center items-center">
+      <div className="flex justify-center items-center dark:text-white">
         <div className="flex flex-col gap-1">
           {letters.map((rowData, indx) => (
             <div key={indx} className="flex gap-1">
